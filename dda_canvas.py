@@ -14,6 +14,10 @@ class ResizingCanvas(Canvas):
 
     def on_resize(self, event):
         global array_posicoes
+        global canvas_width
+        global canvas_height
+        global width_scale
+        global height_scale
         # determine the ratio of old width/height to new width/height
         width_scale = float(event.width)/self.width
         print("wscale = ", width_scale)
@@ -26,6 +30,11 @@ class ResizingCanvas(Canvas):
         self.scale("all", 0, 0, width_scale, height_scale)
         canvas_width = round(canvas_width * width_scale)
         canvas_height = round(canvas_height * height_scale)
+        self.escala()
+        # img = PhotoImage(width=(round(canvas_width*width_scale)), height=(round(canvas_height*height_scale)))
+        # canvas.create_image((canvas_width//2), (canvas_height // 2), image=img, state="normal", tag="all")
+
+
 
 width_scale = 1.0
 height_scale = 1.0
@@ -49,10 +58,24 @@ canvas = ResizingCanvas(frame,
 #                 width=canvas_width,
 #                 height=canvas_height, bg="#222222")
 canvas.pack(expand=YES, fill=BOTH)
-
+circle = Button(master, text="círculo")
+circle.pack(side="top")
+straight_line = Button(master, text="reta")
+straight_line.pack(side="bottom")
+translation = Button(master, text="translação")
+translation.pack(side="left")
+rotation = Button(master, text="rotação")
+rotation.pack(side="left")
+reflection_X = Button(master, text="refletir X")
+reflection_X.pack(side="left")
+reflection_Y = Button(master, text="refletir Y")
+reflection_Y.pack(side="left")
+reflection_XY = Button(master, text="refletir XY")
+reflection_XY.pack(side="left")
+cut = Button(master, text="recorte")
+cut.pack(side="right")
 
 img = PhotoImage(width=(round(canvas_width*width_scale)), height=(round(canvas_height*height_scale)))
-
 canvas.create_image((canvas_width//2), (canvas_height // 2), image=img, state="normal", tag="all")
 # canvas.addtag('all', img)
 
@@ -154,6 +177,8 @@ def plot_circle_points(xc, yc, x, y):
     img.put("#FF5733", (round(xc+y), round(yc-x)))
     img.put("#FF5733", (round(xc-y), round(yc-x)))
 
+# def escala():
+#     DDA(x1, y1, x2, y2)
 
 
 canvas.addtag_all("all")
