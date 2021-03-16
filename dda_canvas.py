@@ -1,7 +1,7 @@
 # pip install pillow ou pip install Image
 # pip install numpy
 from tkinter import *
-from PIL import Image
+from PIL import Image, ImageTk
 import numpy as np
 from math import *
 
@@ -18,6 +18,9 @@ class ResizingCanvas(Canvas):
         global canvas_height
         global width_scale
         global height_scale
+        global img1
+        global resized_img
+        global new_img
         # determine the ratio of old width/height to new width/height
         width_scale = float(event.width)/self.width
         print("wscale = ", width_scale)
@@ -30,9 +33,11 @@ class ResizingCanvas(Canvas):
         self.scale("all", 0, 0, width_scale, height_scale)
         canvas_width = round(canvas_width * width_scale)
         canvas_height = round(canvas_height * height_scale)
-        self.escala()
-        # img = PhotoImage(width=(round(canvas_width*width_scale)), height=(round(canvas_height*height_scale)))
-        # canvas.create_image((canvas_width//2), (canvas_height // 2), image=img, state="normal", tag="all")
+        #self.escala()
+        img1 = Image.open("jungkook.jpg")
+        resized_img = img1.resize((event.width, event.height), Image.ANTIALIAS)
+        new_img = ImageTk.PhotoImage(resized_img)
+        canvas.create_image((self.winfo_reqwidth() //2), (self.winfo_reqheight() // 2), image=new_img, state="normal")
 
 
 
@@ -75,8 +80,10 @@ reflection_XY.pack(side="left")
 cut = Button(master, text="recorte")
 cut.pack(side="right")
 
-img = PhotoImage(width=(round(canvas_width*width_scale)), height=(round(canvas_height*height_scale)))
-canvas.create_image((canvas_width//2), (canvas_height // 2), image=img, state="normal", tag="all")
+# define image
+img = ImageTk.PhotoImage(file="jungkook.jpg")
+# img = ImageTk.PhotoImage(width=(canvas_width), height=(canvas_height))
+canvas.create_image((canvas_width//2), (canvas_height // 2), image=img, state="normal")
 # canvas.addtag('all', img)
 
 # image.putpixel( (x, y), (0, 0, 0, 255) )
