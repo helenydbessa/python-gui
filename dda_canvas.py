@@ -38,8 +38,8 @@ class ResizingCanvas(Canvas):
 
 width_scale = 1.0
 height_scale = 1.0
-canvas_width = round(600 * width_scale)
-canvas_height = round(500 * height_scale)
+canvas_width = round(1000 * width_scale)
+canvas_height = round(650 * height_scale)
 array_posicoes = np.array([])
 array_posicoes_escalado = np.array([])
 botao = 0
@@ -137,7 +137,7 @@ def circulo():
         y1 = array_posicoes[-3]
         x2 = array_posicoes[-2]
         y2 = array_posicoes[-1]
-        print(array_posicoes)
+        #print(array_posicoes)
         bresenham(x1, y1, x2, y2)
 
 def bresenham(x1, y1, x2, y2):
@@ -148,7 +148,7 @@ def bresenham(x1, y1, x2, y2):
     x = 0
     y = raio
     p = 3 - 2*raio
-    print(p)
+    #print(p)
     plot_circle_points(x1, y1, x, y)
     while x < y:
         if p < 0:
@@ -161,10 +161,10 @@ def bresenham(x1, y1, x2, y2):
     #canvas.create_oval(x0, y0, x1, y1)
 
 def plot_circle_points(xc, yc, x, y):
-    print(xc)
-    print(yc)
-    print(x)
-    print("y = ", y)
+    # print(xc)
+    # print(yc)
+    # print(x)
+    # print("y = ", y)
 
     img.put("#FF5733", (round(xc+x), round(yc+y)))
     if xc-x > 0:
@@ -191,24 +191,30 @@ def escala():
     if scale_width.get().isdigit() and scale_height.get().isdigit():
         eh_int = True
     posicoes = len(array_posicoes)
-    # print("posicoes = ", posicoes)
+    print("posicoes = ", posicoes)
     if(eh_int == True):
         for i in range(posicoes):
-            print("i = ", i)
+            # print("i = ", i)
+            # print(array_posicoes_escalado)
             if(i % 5 == 1):
                 if array_posicoes[i] > array_posicoes[i+2]:
+                    dx = array_posicoes[i] - array_posicoes[i+2]
                     maior_x = array_posicoes[i]
-                    temp = maior_x * int(scale_width.get())
-                    # print(temp)
+                    soma = dx * int(scale_width.get())
+                    temp = soma + array_posicoes[i]
+                    print(temp)
                     # print(type(temp))
                     array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
                 else:
                     maior_x = array_posicoes[i+2]
                     array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i])
-                print(maior_x)
+                # print(maior_x)
                 # print(type(scale_width.get()))
             elif(i % 5 == 3 and maior_x == array_posicoes[i]):
-                temp = maior_x * int(scale_width.get())
+                dx = abs(array_posicoes[i] - array_posicoes[i-2])
+                soma = dx * int(scale_width.get())
+                temp = soma + array_posicoes[i]
+                #temp = maior_x * int(scale_width.get())
                 array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
             elif(i % 5 == 4):
                 print("elif")
@@ -218,8 +224,8 @@ def escala():
                 array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i])
         posicoes = len(array_posicoes_escalado)
         # print("posicoes = ", posicoes)
-        print(array_posicoes)
-        print(array_posicoes_escalado)
+        # print(array_posicoes)
+        # print(array_posicoes_escalado)
         for j in range(posicoes):
             if(j % 5 == 0):
                 if array_posicoes_escalado[j] == 2:
