@@ -39,7 +39,7 @@ class ResizingCanvas(Canvas):
 width_scale = 1.0
 height_scale = 1.0
 canvas_width = round(1000 * width_scale)
-canvas_height = round(650 * height_scale)
+canvas_height = round(550 * height_scale)
 array_posicoes = np.array([])
 array_posicoes_escalado = np.array([])
 botao = 0
@@ -197,101 +197,44 @@ def escala():
             print(array_posicoes)
             # print("i = ", i)
             # print(array_posicoes_escalado)
-            if array_posicoes[i - (i%5)] == 1:
-                print("circulooooo")
-                if(i % 5 == 1 or i % 5 == 2):
-                    if array_posicoes[i] > array_posicoes[i+2]:
-                        print("x1 > x2 ou y1 > y2")
-                        d = array_posicoes[i] - array_posicoes[i+2]
-                        if i % 5 == 1:
-                            menor_x = array_posicoes[i+2]
-                        else:
-                            menor_y = array_posicoes[i+2]
-                        # subtrai = dx * int(scale_width.get())
-                        # temp = array_posicoes[i] - subtrai
-                        #print(temp)
-                        # print(type(temp))
-                        array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i])
-                    else:
-                        if(i % 5 == 1):
-                            menor_x = array_posicoes[i]
-                        else:
-                            menor_y = array_posicoes[i]
-                        array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i])
-                    # print(maior_x)
-                    # print(type(scale_width.get()))
-                elif(i % 5 == 3 or i % 5 == 4):
-                    d = abs(array_posicoes[i] - array_posicoes[i-2])
-                    if i % 5 == 3:
-                        if menor_x == array_posicoes[i]:
-                            print("x1 > x2")
-                            subtrai = d * int(scale_width.get())
-                            temp = array_posicoes[i] - subtrai
-                            #temp = maior_x * int(scale_width.get())
-                            array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
-                        else:
-                            print("x1 < x2")
-                            soma = d * int(scale_width.get())
-                            temp = array_posicoes[i] + soma
-                            array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
-                    else:
-                        if menor_y == array_posicoes[i]:
-                            print("y1 > y2")
-                            subtrai = d * int(scale_width.get())
-                            temp = array_posicoes[i] - subtrai
-                            #temp = maior_x * int(scale_width.get())
-                            array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
-                        else:
-                            print("y1 < y2")
-                            soma = d * int(scale_width.get())
-                            temp = array_posicoes[i] + soma
-                            array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
-                # elif(i % 5 == 4):
-                #     print("elif")
-                #     temp = array_posicoes[i] * int(scale_height.get())
-                #     array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
-                else:
+            if(i % 5 == 1):
+                if array_posicoes[i] >= array_posicoes[i+2]:
+                    print("x1 > x2")
+                    dx = array_posicoes[i] - array_posicoes[i+2]
+                    menor_x = array_posicoes[i+2]
+                    # subtrai = dx * int(scale_width.get())
+                    # temp = array_posicoes[i] - subtrai
+                    #print(temp)
+                    # print(type(temp))
                     array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i])
+                else:
+                    menor_x = array_posicoes[i]
+                    array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i])
+                # print(maior_x)
+                # print(type(scale_width.get()))
+            elif(i % 5 == 3):
+                dx = abs(array_posicoes[i] - array_posicoes[i-2])
+                if menor_x == array_posicoes[i]:
+                    print("x1 > x2")
+                    subtrai = dx * int(scale_width.get())
+                    temp = array_posicoes[i] - subtrai
+                    #temp = maior_x * int(scale_width.get())
+                    array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
+                else:
+                    print("x1 < x2")
+                    soma = dx * int(scale_width.get())
+                    temp = array_posicoes[i] + soma
+                    array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
+            elif(i % 5 == 4):
+                print("elif")
+                temp = array_posicoes[i] * int(scale_height.get())
+                array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
             else:
-                print("oooof")
-                print(array_posicoes_escalado)
-                if i % 5 == 2:
-                    print("if == 2")
-                    dy = abs(array_posicoes[i] - array_posicoes[i+2])
-                    dx = abs(array_posicoes[i-1] - array_posicoes[i+1])
-                    if array_posicoes[i] > array_posicoes[i+2]: #y1 > y2
-                        array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i-1]) #x1 se mantém
-                        soma = dy * int(scale_height.get())
-                        temp = soma + array_posicoes[i]
-                        array_posicoes_escalado = np.append(array_posicoes_escalado, temp) #y1+dy
-                        if array_posicoes[i-1] > array_posicoes[i+1]: #x1 > x2
-                            subtrai = dx * int(scale_width.get())
-                            temp = array_posicoes[i+1] - subtrai #x2-dx
-                            array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
-                        else: #x1 < x2
-                            soma = dx * int(scale_width.get())
-                            temp = soma + array_posicoes[i+1] #x2+dx
-                            array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
-                        array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i+2])
-                    else: #y1 < y2
-                        if array_posicoes[i-1] > array_posicoes[i+1]: #x1 > x2
-                            soma = dx * int(scale_width.get())
-                            temp = soma + array_posicoes[i-1]
-                            array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
-                        else: #x1 < x2
-                            subtrai = dx * int(scale_width.get())
-                            temp = array_posicoes[i-1] - subtrai #x1 - dx
-                        array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i])
-                        array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i+1])
-                        soma = dy * int(scale_width.get())
-                        temp = array_posicoes[i] + soma
-                        array_posicoes_escalado = np.append(array_posicoes_escalado, temp)
-                else:
-                    array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i])
+                array_posicoes_escalado = np.append(array_posicoes_escalado, array_posicoes[i])
         posicoes = len(array_posicoes_escalado)
         # print("posicoes = ", posicoes)
-        print(array_posicoes)
-        print(array_posicoes_escalado)
+        # print(array_posicoes)
+        # print(array_posicoes_escalado)
         for j in range(posicoes):
             if(j % 5 == 0):
                 if array_posicoes_escalado[j] == 2:
